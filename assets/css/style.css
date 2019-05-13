@@ -62,7 +62,7 @@ body, html {
     width: 640px;
 }
 
-.content-solution-container {
+#content-solution-container {
     width: 640px;
     background-color: var(--site-theme-color);
     height: 60px;
@@ -101,12 +101,35 @@ body, html {
     background-color: white;
     border-radius: 10px;
 }
-.content-letters-used {
+
+/* --- LETTERS USED */
+.content-letters-used-container {
     width: 640px;
     height: 200px;
     margin: 0 auto;
     margin-top: 35px;
     padding: 5px 25px 5px 25px;
+}
+
+.content-letters-used {
+    width: 40px;
+    height: 40px;
+    display: inline-block;
+    background-color: #cdcdcd;
+    border-radius: 50%;
+    font-size: 25px;
+    font-weight: 500;
+    margin-top: 10px;
+    margin-right: 20px;
+    padding-left: 1px; /* Make letter weight feel more centered*/
+    text-align: center;
+    line-height: 40px;
+
+
+}
+
+span[class^='letter-'] {
+    display: none;
 }
 
 /* --- FOOTER */
