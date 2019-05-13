@@ -143,10 +143,17 @@ span[class^='letter-'] {
     background-repeat: repeat-x;
 }
 
-/* --- ANIMATE CSS ADJUSTMENT */
+/* --- ANIMATE.CSS ADJUSTMENT */
 .rubberBand {
-    -webkit-animation: rubberBand 0.5s; /* Safari 4+ */
-    -moz-animation:    rubberBand 0.5s; /* Fx 5+ */
-    -o-animation:      rubberBand 0.5s; /* Opera 12+ */
-    animation:         rubberBand 0.5s; /* IE 10+, Fx 29+ */
+    -webkit-animation: rubberBand 0.3s;  /* Safari 4+ */
+    -moz-animation:    rubberBand 0.3s;  /* Fx 5+ */
+    -o-animation:      rubberBand 0.3s;  /* Opera 12+ */
+    animation:         rubberBand 0.3as; /* IE 10+, Fx 29+ */
+  }
+
+  .shake {
+    -webkit-animation: shake 0.2s;  /* Safari 4+ */
+    -moz-animation:    shake 0.2s;  /* Fx 5+ */
+    -o-animation:      shake 0.2s;  /* Opera 12+ */
+    animation:         shake 0.2as; /* IE 10+, Fx 29+ */
   }

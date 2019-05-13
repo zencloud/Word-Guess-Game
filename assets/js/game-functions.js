@@ -36,19 +36,32 @@ const game_check_letter = function () {
     switch (gameInputState) {
 
         case "gameplay":
+            
             // Detect Keyboard Input and Check for only letters
+            // let keyInput = event.keyCode;
+            // if (keyInput >= 65 && keyInput <= 90 || keyInput >= 97 && keyInput <= 122) {
+
             let keyInput = event.keyCode;
-            if (keyInput >= 65 && keyInput <= 90 || keyInput >= 97 && keyInput <= 122) {
+            if (isLetter(keyInput)) {
 
                 // Convert Keyinput to Single Letter UpperCase String
                 keyInput = String.fromCharCode(keyInput);
-
+                
                 // Check if Letter has been used before
                 let letterHasBeenUsed = lettersUsed.includes(keyInput);
 
                 // Letter has already been used
                 if (letterHasBeenUsed) {
-                    //console.log('Letter Used');
+                    // LETTER HAS BEEN USED
+                    let elementBody = document.getElementsByTagName("body")[0];
+                    elementBody.classList.remove("animated");
+                    elementBody.classList.remove("shake");
+
+
+                    setTimeout(function(){
+                        elementBody.classList.add("animated");
+                        elementBody.classList.add("shake");
+                    }, 1);
                 }
 
                 // Letter is new
@@ -68,20 +81,20 @@ const game_check_letter = function () {
                     if (chrCount === 0) {
 
                         // Increase Wrong Guess Total
-                        playerWrongTotal++;
+                        playerWrongTotal++;2
 
                         // Update Bites Remaining UI
                         let htmlBitesRemaining = document.getElementsByClassName("content-cookie-details")[0];
                         let bitesRemaining = 6 - playerWrongTotal;
                         htmlBitesRemaining.innerHTML = `<h1>Bites Remaining: ${bitesRemaining}</h1>`;
 
-                        // Cookie Statges 1-6
+                        // Cookie Display Stages 1-6
                         if (playerWrongTotal < 6) {
                             document.getElementById("cookie-display").src = "assets/imgs/cookie-stages/" + (playerWrongTotal + 1) + ".png";
                         }
 
                         // Player Lost - Game Over
-                        if (playerWrongTotal === 6) {
+                        if (playerWrongTotal == 6) {
 
                             // Update Game Cookie Display
                             document.getElementById("cookie-display").src = "assets/imgs/game-states/lose.png";
@@ -109,10 +122,14 @@ const game_check_letter = function () {
 
                             // Update Cookie Display
                             document.getElementById("cookie-display").src = "assets/imgs/game-states/win.png";
+                            let cookieElement = document.getElementById("cookie-display");
+                            cookieElement.classList.add("animated");
+                            cookieElement.classList.add("fadeIn");
 
                             // Change Input
                             gameInputState = "gameover";
                         }
+
                         // Reveal Letters Found
                         for (var i = 0; i < wordValue.length; i++) {
                             if (wordValue[i] == keyInput) {
