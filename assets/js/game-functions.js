@@ -26,65 +26,103 @@ const game_generate_word = function () {
 };
 
 const game_check_letter = function () {
-    // Detect Keyboard Input and Check for only letters
-    let keyInput = event.keyCode;
-    if (keyInput >= 65 && keyInput <= 90 || keyInput >= 97 && keyInput <= 122) {
 
-        // Convert Keyinput to Single Letter UpperCase String
-        keyInput = String.fromCharCode(keyInput);
+    // Break out of function if input disabled
+    if (!gameInputAllowed) {
+        return false;
+    }
 
-        // Check if Letter has been used before
-        let letterHasBeenUsed = lettersUsed.includes(keyInput);
+    // Game Input Detection
+    switch (gameInputState) {
 
-        // Letter has already been used
-        if (letterHasBeenUsed) {
-            //console.log('Letter Used');
-        }
+        case "gameplay":
+            // Detect Keyboard Input and Check for only letters
+            let keyInput = event.keyCode;
+            if (keyInput >= 65 && keyInput <= 90 || keyInput >= 97 && keyInput <= 122) {
 
-        // Letter is new
-        if (!letterHasBeenUsed) {
+                // Convert Keyinput to Single Letter UpperCase String
+                keyInput = String.fromCharCode(keyInput);
 
-            // Update Used Letter
-            lettersUsed.push(keyInput);
-            game_update_letters_used();
+                // Check if Letter has been used before
+                let letterHasBeenUsed = lettersUsed.includes(keyInput);
 
-            // Update Player Turn
-            playerTurn++;
-
-            console.log(playerTurn);
-            // Find if letters exist in the word
-            let chrCount = getChrCount(wordValue, keyInput);
-
-            // No Letters Found. Update Cookie State
-            if (chrCount === 0) {
-
-                wrongGuessTotal++;
-
-                // Cookie Statges 1-6
-                if (wrongGuessTotal < 6) {
-                    let htmlBitesRemaining = document.getElementsByClassName("content-cookie-details")[0];
-                    let bitesRemaining = 6-wrongGuessTotal;
-                    htmlBitesRemaining.innerHTML = `Bites Remaining: ${bitesRemaining}`;
-                    document.getElementById("cookie-display").src = "assets/imgs/cookie-stages/" + (wrongGuessTotal + 1) + ".png";
+                // Letter has already been used
+                if (letterHasBeenUsed) {
+                    //console.log('Letter Used');
                 }
 
-                // Player Lost - Game Over
-                if (wrongGuessTotal === 6) {
-                    document.getElementById("cookie-display").src = "assets/imgs/game-states/lose.png";
-                }
-            }
+                // Letter is new
+                if (!letterHasBeenUsed) {
 
-            // Letter(s) Found in Word
-            // Loop Through and add character position(s) in array
-            if (chrCount > 0) {
-                for (var i = 0; i < wordValue.length; i++) {
-                    if (wordValue[i] == keyInput) {
-                        let className = "letter-" + i;
-                        document.getElementsByClassName(className)[0].style.display = 'block';
+                    // Update Used Letter
+                    lettersUsed.push(keyInput);
+                    game_update_letters_used();
+
+                    // Update Player Turn
+                    playerTurn++;
+
+                    // Find if letters exist in the word
+                    let chrCount = getChrCount(wordValue, keyInput);
+
+                    // No Letters Found. Update Cookie State
+                    if (chrCount === 0) {
+
+                        // Increase Wrong Guess Total
+                        playerWrongTotal++;
+
+                        // Update Bites Remaining UI
+                        let htmlBitesRemaining = document.getElementsByClassName("content-cookie-details")[0];
+                        let bitesRemaining = 6 - playerWrongTotal;
+                        htmlBitesRemaining.innerHTML = `Bites Remaining: ${bitesRemaining}`;
+
+                        // Cookie Statges 1-6
+                        if (playerWrongTotal < 6) {
+                            document.getElementById("cookie-display").src = "assets/imgs/cookie-stages/" + (playerWrongTotal + 1) + ".png";
+                        }
+
+                        // Player Lost - Game Over
+                        if (playerWrongTotal === 6) {
+
+                            // Update Game Cookie Display
+                            document.getElementById("cookie-display").src = "assets/imgs/game-states/lose.png";
+                            
+                            // Change Input Mode
+                            gameInputState = "gameover";
+                        }
+                    }
+
+                    // Letter(s) Found in Word
+                    // Loop Through and add character position(s) in array
+                    if (chrCount > 0) {
+
+                        // Update Correct Totals
+                        playerCorrectTotal += chrCount;
+                        
+                        // Check if Won
+                        if (playerCorrectTotal == wordValue.length) {
+
+                            // Update Cookie Display
+                            document.getElementById("cookie-display").src = "assets/imgs/game-states/win.png";
+
+                            // Change Input
+                            gameInputState = "gameover";
+                        }
+                        // Reveal Letters Found
+                        for (var i = 0; i < wordValue.length; i++) {
+                            if (wordValue[i] == keyInput) {
+                                let className = "letter-" + i;
+                                document.getElementsByClassName(className)[0].style.display = 'block';
+                            }
+                        }
                     }
                 }
             }
-        }
+        break;
+
+        case "gameover":
+            // Reset Game
+            location.reload();
+        break;
     }
 }
 

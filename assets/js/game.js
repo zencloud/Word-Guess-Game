@@ -18,14 +18,17 @@ document.addEventListener('keydown', function (event) {
 });
 
 // Word Library
-var wordLibrary = ['MONEY', 'HOUSE', 'BUSINESS', 'CHEESE'];
+var wordLibrary = ['SWEET', 'SUGAR', 'CHERRY', 'FUDGE', 'TAFFY', 'SYRUP', 'DONUT', 'CAKE', 'PIE', 'HONEY' ];
 var wordValue   = null;
 var wordRandom  = null;
 var lettersUsed = [];
 
 // Game State Data
-var playerTurn = 0;
-var wrongGuessTotal = 0;
+var gameInputAllowed   = true;          // Game Input State Controller
+var gameInputState     = "gameplay";    // Switch input control states: gameplay, gameover
+var playerCorrectTotal = 0;             // Total player correct turns
+var playerWrongTotal   = 0;             // Total player wrong turns
+var playerTurn         = 0;             // Total player turns
 
 // Game Start Generate Word
 game_generate_word();

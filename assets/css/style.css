@@ -20,6 +20,10 @@ body, html {
     height: 100%;
 }
 
+h1 {
+    font-weight: 500;
+}
+
 /* --- WRAPPER */
 .wrapper {
     width: 100%;
@@ -104,7 +108,6 @@ body, html {
 /* --- LETTERS USED */
 .content-letters-used-container {
     width: 640px;
-    height: 200px;
     margin: 0 auto;
     margin-top: 35px;
     padding: 5px 25px 5px 25px;
