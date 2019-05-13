@@ -62,12 +62,14 @@ const game_check_letter = function () {
 
                 // Cookie Statges 1-6
                 if (wrongGuessTotal < 6) {
-                    document.getElementById("cookie-display").src = "assets/imgs/cookie-stages/" + (wrongGuessTotal + 1) + ".png";
+                    let htmlBitesRemaining = document.getElementsByClassName("content-cookie-details")[0];
+                    let bitesRemaining = 6-wrongGuessTotal;
+                    htmlBitesRemaining.innerHTML = `Bites Remaining: ${bitesRemaining}`;
                     document.getElementById("cookie-display").src = "assets/imgs/cookie-stages/" + (wrongGuessTotal + 1) + ".png";
                 }
 
                 // Player Lost - Game Over
-                if (wrongGuessTotal === 7) {
+                if (wrongGuessTotal === 6) {
                     document.getElementById("cookie-display").src = "assets/imgs/game-states/lose.png";
                 }
             }
