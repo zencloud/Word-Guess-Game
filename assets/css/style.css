@@ -33,7 +33,7 @@ body, html {
     background-image: url("../imgs/header_wavey_bg.png");
     background-repeat: repeat-x;
     background-position: bottom;
-    height: 125px;
+    height: 115px;
 }
 
 .header-main .site-logo {
@@ -134,6 +134,14 @@ span[class^='letter-'] {
 }
 
 .footer {
-    background-image: url("/assets/imgs/footer-bg.png");
+    background-image: url("../imgs/footer-bg.png");
     background-repeat: repeat-x;
 }
+
+/* --- ANIMATE CSS ADJUSTMENT */
+.rubberBand {
+    -webkit-animation: rubberBand 0.5s; /* Safari 4+ */
+    -moz-animation:    rubberBand 0.5s; /* Fx 5+ */
+    -o-animation:      rubberBand 0.5s; /* Opera 12+ */
+    animation:         rubberBand 0.5s; /* IE 10+, Fx 29+ */
+  }

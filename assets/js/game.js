@@ -23,5 +23,9 @@ var wordValue   = null;
 var wordRandom  = null;
 var lettersUsed = [];
 
+// Game State Data
+var playerTurn = 0;
+var wrongGuessTotal = 0;
+
 // Game Start Generate Word
 game_generate_word();
