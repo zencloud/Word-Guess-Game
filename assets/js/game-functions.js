@@ -73,7 +73,7 @@ const game_check_letter = function () {
                         // Update Bites Remaining UI
                         let htmlBitesRemaining = document.getElementsByClassName("content-cookie-details")[0];
                         let bitesRemaining = 6 - playerWrongTotal;
-                        htmlBitesRemaining.innerHTML = `Bites Remaining: ${bitesRemaining}`;
+                        htmlBitesRemaining.innerHTML = `<h1>Bites Remaining: ${bitesRemaining}</h1>`;
 
                         // Cookie Statges 1-6
                         if (playerWrongTotal < 6) {
@@ -88,6 +88,12 @@ const game_check_letter = function () {
                             
                             // Change Input Mode
                             gameInputState = "gameover";
+
+                            // Reveal Answer
+                            for (var i = 0; i < wordValue.length; i++) {
+                                let className = "letter-" + i;
+                                document.getElementsByClassName(className)[0].style.display = 'block';
+                            }
                         }
                     }
 
@@ -129,7 +135,7 @@ const game_check_letter = function () {
 const game_update_letters_used = function () {
 
     // Update Display of Letters Used
-    var htmlData = '<p>Letters Used:</p>';
+    var htmlData = '<h1>Letters Used:</h1>';
 
     // Loop through character positions to spell out worad
     for (var i = 0; i < lettersUsed.length; i++) {
@@ -150,8 +156,6 @@ const game_update_letters_used = function () {
             </div>
         `;
     }
-
-    // Update Turn
 
     // Set Div Content
     document.getElementsByClassName("content-letters-used-container")[0].innerHTML = htmlData;
