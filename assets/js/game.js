@@ -10,20 +10,18 @@ Keyboard Character Code All Letters Range:
 
 // Game Setup:
 // Apply Listenners
-document.addEventListener('keydown', function (event) {
 
-    // Detect Keyboard Input and Check for only letters
-    let keyInput = event.keyCode;
-    if (keyInput >= 65 && keyInput <= 90 || keyInput >= 97 && keyInput <=122 ) {
-        
-        keyInput = String.fromCharCode(keyInput);
-        console.log(keyInput);
-    }
+
+// KEYBOARD INPUT
+document.addEventListener('keydown', function (event) {
+    game_check_letter();
 });
 
-// Temporary Word Library
-var wordLibrary = ['money', 'house', 'business', 'cheese'];
+// Word Library
+var wordLibrary = ['MONEY', 'HOUSE', 'BUSINESS', 'CHEESE'];
+var wordValue   = null;
+var wordRandom  = null;
+var lettersUsed = [];
 
 // Game Start Generate Word
 game_generate_word();
-

@@ -7,3 +7,8 @@ function getRandomInt(min, max) {
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
+
+// Get Total Characters From String
+function getChrCount(string, chr) {
+    return string.split(chr).length - 1;
+}
