@@ -59,12 +59,21 @@ h1 {
 }
 
 .content-cookie-details {
-    padding-right: 25px;
+    position: relative;
+    padding-right: 45px;
     margin: 0 auto;
     text-align: right;
     width: 640px;
     margin-top: -50px;
     padding-bottom: 40px;
+}
+
+.bites-remaining {
+    position: absolute;
+    font-size: 30px;
+    color: #d25400;
+    bottom: 32px;
+    right: 22px;
 }
 
 #content-solution-container {

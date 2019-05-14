@@ -7,28 +7,35 @@ Keyboard Character Code All Letters Range:
     Lower:   97 - 122
 */
 
-
 // Game Setup:
-// Apply Listenners
+
+// Game Stat Enums 
+const inputStates = {
+    GAMEPLAY: 'gameplay',
+    GAMEOVER: 'gameover'
+};
+
+// Game Object Controller
+var gameData = {
+
+    // Word Library Data
+    wordLibrary:    ['SWEET', 'SUGAR', 'CHERRY', 'FUDGE', 'TAFFY', 'SYRUP', 'DONUT', 'CAKE', 'PIE', 'HONEY' ],
+    wordValue:      null,
+    lettersUsed:    [],
+
+    // Game States
+    inputAllowed:   true,
+    inputState:     inputStates.GAMEPLAY,
+    correctTotal:   0,
+    wrongTotal:     0,
+    turnCount:      0
+};
 
 
-// KEYBOARD INPUT
+// Keyboard Input Listener
 document.addEventListener('keydown', function (event) {
     game_check_letter();
 });
-
-// Word Library
-var wordLibrary = ['SWEET', 'SUGAR', 'CHERRY', 'FUDGE', 'TAFFY', 'SYRUP', 'DONUT', 'CAKE', 'PIE', 'HONEY' ];
-var wordValue   = null;
-var wordRandom  = null;
-var lettersUsed = [];
-
-// Game State Data
-var gameInputAllowed   = true;          // Game Input State Controller
-var gameInputState     = "gameplay";    // Switch input control states: gameplay, gameover
-var playerCorrectTotal = 0;             // Total player correct turns
-var playerWrongTotal   = 0;             // Total player wrong turns
-var playerTurn         = 0;             // Total player turns
 
 // Game Start Generate Word
 game_generate_word();
