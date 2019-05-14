@@ -32,15 +32,15 @@ const game_update_letters_used = function () {
     // Update Display of Letters Used
     var htmlData = '<h1>Letters Used:</h1>';
 
-    // Loop through character positions to spell out worad
+    // Since .innerHTML clears data from element we have to re-write
+    // all existing used letters and only animated last one entered
     for (var i = 0; i < gameData.lettersUsed.length; i++) {
 
         // Create Main Word Div
         let letterValue = gameData.lettersUsed[i];
 
         // Animation check: Only last value has intro
-        // Preents every container from re-animating every refresh
-        // Dev note: Need to learn to append
+        // Prevents every container from re-animating every refresh
         let introCheck = '';
         if (i == gameData.lettersUsed.length - 1) {
             introCheck = 'animated rubberBand';
@@ -116,7 +116,7 @@ const game_check_letter = function () {
                         // Update Bites Remaining UI
                         let htmlBitesRemaining = document.getElementsByClassName("content-cookie-details")[0];
                         let bitesRemaining = 6 - gameData.wrongTotal;
-                        htmlBitesRemaining.innerHTML = `<h1>Bites Remaining: ${bitesRemaining}</h1>`;
+                        htmlBitesRemaining.innerHTML = `<h1>Bites Remaining: <span class=\"bites-remaining\">${bitesRemaining}</span></h1>`;
 
                         // Cookie Display Stages 1-6
                         if (gameData.wrongTotal < 6) {

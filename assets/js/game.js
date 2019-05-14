@@ -1,21 +1,13 @@
 // Cookie Conjector Core Game Controller
 
-/* Dev Notes: 
-Keyboard Character Code All Letters Range:
-    Numbers: 48 - 47
-    Upper:   65 - 90
-    Lower:   97 - 122
-*/
-
 // Game Setup:
-
-// Game Stat Enums 
+// Game State Enums 
 const inputStates = {
     GAMEPLAY: 'gameplay',
     GAMEOVER: 'gameover'
 };
 
-// Game Object Controller
+// Game Data Controller
 var gameData = {
 
     // Word Library Data
