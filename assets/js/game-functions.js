@@ -134,7 +134,10 @@ const game_check_letter = function () {
                         for (var i = 0; i < wordValue.length; i++) {
                             if (wordValue[i] == keyInput) {
                                 let className = "letter-" + i;
-                                document.getElementsByClassName(className)[0].style.display = 'block';
+                                let solutionElement = document.getElementsByClassName(className)[0];
+                                solutionElement.style.display = 'block';
+                                solutionElement.classList.add("animated");
+                                solutionElement.classList.add("fadeInDown");
                             }
                         }
                     }
