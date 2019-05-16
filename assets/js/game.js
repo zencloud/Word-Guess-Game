@@ -30,7 +30,9 @@ var gameData = {
     inputState:     inputStates.GAMEPLAY,
     correctTotal:   0,
     wrongTotal:     0,
-    turnCount:      0
+    turnCount:      0,
+    winCount:       0,
+    loseCount:      0
 };
 
 

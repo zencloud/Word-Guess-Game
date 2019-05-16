@@ -45,6 +45,21 @@ h1 {
     padding-top: 20px;
 }
 
+#player-record {
+    position: absolute;
+    right: 0px;
+    top: 0px;
+    margin: 20px;
+    font-weight: 400;
+    font-size: 14px;
+    color: white;
+    text-align: right;
+}
+
+#win-record, #lose-record {
+    font-weight: bold;
+}
+
 /* --- MAIN CONTENT */
 .content-cookie-container {
     width: 100%;
@@ -58,7 +73,7 @@ h1 {
     width: 640px;
 }
 
-.content-cookie-details {
+#content-cookie-details {
     position: relative;
     padding-right: 45px;
     margin: 0 auto;
@@ -115,7 +130,7 @@ h1 {
 }
 
 /* --- LETTERS USED */
-.content-letters-used-container {
+#content-letters-used-container {
     width: 640px;
     margin: 0 auto;
     margin-top: 35px;
@@ -145,6 +160,7 @@ span[class^='letter-'] {
 /* WORD HINT */
 #hint-details {
     margin-top: 25px;
+    margin-bottom: 15px;
     text-align: center;
     font-weight: 500;
     font-style: italic;

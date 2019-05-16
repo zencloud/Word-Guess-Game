@@ -34,3 +34,15 @@ function isLetter(keyInput) {
     }
     return result;
 }
+
+function screen_shake() {
+     // LETTER HAS BEEN USED
+     let elementBody = document.getElementsByTagName("body")[0];
+     elementBody.classList.remove("animated");
+     elementBody.classList.remove("shake");
+     
+     setTimeout(function() {
+         elementBody.classList.add("animated");
+         elementBody.classList.add("shake");
+     }, 1);
+}

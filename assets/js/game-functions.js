@@ -1,5 +1,104 @@
 // Core Game Functions
 
+
+
+// --- Player Wond
+const game_set_round_won = function () {
+    // Update Cookie Display
+    document.getElementById("cookie-display").src = "assets/imgs/game-states/win.png";
+    let cookieElement = document.getElementById("cookie-display");
+    cookieElement.classList.add("animated");
+    cookieElement.classList.add("fade");
+    
+    // Change Input
+    gameData.inputState = inputStates.GAMEOVER;
+
+    // Update Game Win Count
+    gameData.winCount++;
+    document.getElementById("win-record").textContent = gameData.winCount;
+}
+
+// --- Set Game Over
+const game_set_game_over_display = function () {
+    // Update Game Cookie Display
+    document.getElementById("cookie-display").src = "assets/imgs/game-states/lose.png";
+
+    // Change Input Mode
+    gameData.inputState = inputStates.GAMEOVER;
+
+    // Update Game Lose Count
+    gameData.loseCount++;
+    document.getElementById("lose-record").textContent = gameData.loseCount;
+}
+
+// --- Reset Game Turn
+const game_new_round = function () {
+
+    // Reset System Vars
+    gameData.wordValue      = null;
+    gameData.hintValue      = null;
+    gameData.lettersUsed    = [];
+
+    gameData.inputAllowed   = true;
+    gameData.inputState     = inputStates.GAMEPLAY;
+    gameData.correctTotal   = 0;
+    gameData.wrongTotal     = 0;
+    gameData.turnCount      = 0;
+
+    // Display Updates
+    document.getElementById("cookie-display").src = "assets/imgs/cookie-stages/1.png";
+
+    // Update Last Letters Used:
+    document.getElementById("content-letters-used-container")
+            .innerHTML ="<h1>Letters Used:</h1>";
+
+    // Generate new word
+    game_generate_word();
+
+}
+
+
+
+
+// --- Reveal Correct Letters Found
+const game_reveal_found_letters = function (keyInput) {
+    for (var i = 0; i < gameData.wordValue.length; i++) {
+        if (gameData.wordValue[i] === keyInput) {
+            let className = "letter-" + i;
+            let solutionElement = document.getElementsByClassName(className)[0];
+            solutionElement.style.display = 'block';
+            solutionElement.classList.add("animated");
+            solutionElement.classList.add("fadeInDown");
+        }
+    }
+}
+
+// --- Reveal game answer
+const game_reveal_solution = function () {
+    for (var i = 0; i < gameData.wordValue.length; i++) {
+        let className = "letter-" + i;
+        document.getElementsByClassName(className)[0].style.display = 'block';
+    }
+}
+
+// --- Updates bites remaining after failed guess
+const game_update_bites_remaining = function () {
+    
+    // Update Bite Remaining Data
+    gameData.wrongTotal++;
+    
+    // Update Bites Remaining UI
+    let htmlBitesRemaining = document.getElementById("content-cookie-details");
+    let bitesRemaining = 6 - gameData.wrongTotal;
+    htmlBitesRemaining.innerHTML = `<h1>Bites Remaining: <span class=\"bites-remaining\">${bitesRemaining}</span></h1>`;
+
+    // Update Cookie State
+    // Cookie Display Stages 1-6
+    if (gameData.wrongTotal < 6) {
+        document.getElementById("cookie-display").src = "assets/imgs/cookie-stages/" + (gameData.wrongTotal + 1) + ".png";
+    }
+}
+
 // --- Generate and Display New Word
 const game_generate_word = function () {
 
@@ -23,9 +122,8 @@ const game_generate_word = function () {
         `;
     }
 
-    // Set Div Content
+    // Update visuals for solution and hint
     document.getElementById("content-solution-container").innerHTML = htmlData;
-
     document.getElementById("hint-details").innerHTML = gameData.hintValue;
 };
 
@@ -38,28 +136,27 @@ const game_update_letters_used = function () {
 
     // Since .innerHTML clears data from element we have to re-write
     // all existing used letters and only animated last one entered
-    for (var i = 0; i < gameData.lettersUsed.length; i++) {
+    for (let i = 0; i < gameData.lettersUsed.length; i++) {
 
         // Create Main Word Div
         let letterValue = gameData.lettersUsed[i];
 
         // Animation check: Only last value has intro
         // Prevents every container from re-animating every refresh
-        let introCheck = '';
+        let lastLetterClass = '';
         if (i === gameData.lettersUsed.length - 1) {
-            introCheck = 'animated rubberBand';
+            lastLetterClass = 'animated rubberBand';
         }
         htmlData += `
-            <div class=\"content-letters-used ${introCheck} \">
+            <div class=\"content-letters-used ${lastLetterClass} \">
             ${letterValue}
             </div>
         `;
     }
 
-    // Set Div Content
-    document.getElementsByClassName("content-letters-used-container")[0].innerHTML = htmlData;
+    // Update display for last letters used
+    document.getElementById("content-letters-used-container").innerHTML = htmlData;
 };
-
 
 // --- CHECK INPUT - MASTER LOOP
 const game_check_letter = function () {
@@ -86,16 +183,7 @@ const game_check_letter = function () {
 
                 // Letter has already been used
                 if (letterHasBeenUsed) {
-                    // LETTER HAS BEEN USED
-                    let elementBody = document.getElementsByTagName("body")[0];
-                    elementBody.classList.remove("animated");
-                    elementBody.classList.remove("shake");
-
-
-                    setTimeout(function(){
-                        elementBody.classList.add("animated");
-                        elementBody.classList.add("shake");
-                    }, 1);
+                    screen_shake();
                 }
 
                 // Letter is new
@@ -103,6 +191,8 @@ const game_check_letter = function () {
 
                     // Update Used Letter
                     gameData.lettersUsed.push(keyInput);
+
+                    // Update Letters that have been used.
                     game_update_letters_used();
 
                     // Update Player Turn
@@ -114,38 +204,21 @@ const game_check_letter = function () {
                     // No Letters Found. Update Cookie State
                     if (chrCount === 0) {
 
-                        // Increase Wrong Guess Total
-                        gameData.wrongTotal++;2
-
-                        // Update Bites Remaining UI
-                        let htmlBitesRemaining = document.getElementsByClassName("content-cookie-details")[0];
-                        let bitesRemaining = 6 - gameData.wrongTotal;
-                        htmlBitesRemaining.innerHTML = `<h1>Bites Remaining: <span class=\"bites-remaining\">${bitesRemaining}</span></h1>`;
-
-                        // Cookie Display Stages 1-6
-                        if (gameData.wrongTotal < 6) {
-                            document.getElementById("cookie-display").src = "assets/imgs/cookie-stages/" + (gameData.wrongTotal + 1) + ".png";
-                        }
+                        // Update displays and data for wrong letter choice
+                        game_update_bites_remaining();
 
                         // Player Lost - Game Over
                         if (gameData.wrongTotal === 6) {
 
-                            // Update Game Cookie Display
-                            document.getElementById("cookie-display").src = "assets/imgs/game-states/lose.png";
-                            
-                            // Change Input Mode
-                            gameData.inputState = inputStates.GAMEOVER;
+                            // Set Gameover Display
+                            game_set_game_over_display();
 
                             // Reveal Answer
-                            for (var i = 0; i < gameData.wordValue.length; i++) {
-                                let className = "letter-" + i;
-                                document.getElementsByClassName(className)[0].style.display = 'block';
-                            }
+                            game_reveal_solution();
                         }
                     }
 
                     // Letter(s) Found in Word
-                    // Loop Through and add character position(s) in array
                     if (chrCount > 0) {
 
                         // Update Correct Totals
@@ -153,27 +226,11 @@ const game_check_letter = function () {
                         
                         // Check if Won
                         if (gameData.correctTotal === gameData.wordValue.length) {
-
-                            // Update Cookie Display
-                            document.getElementById("cookie-display").src = "assets/imgs/game-states/win.png";
-                            let cookieElement = document.getElementById("cookie-display");
-                            cookieElement.classList.add("animated");
-                            cookieElement.classList.add("fadeIn");
-
-                            // Change Input
-                            gameData.inputState = inputStates.GAMEOVER;
+                            game_set_round_won();
                         }
 
                         // Reveal Letters Found
-                        for (var i = 0; i < gameData.wordValue.length; i++) {
-                            if (gameData.wordValue[i] === keyInput) {
-                                let className = "letter-" + i;
-                                let solutionElement = document.getElementsByClassName(className)[0];
-                                solutionElement.style.display = 'block';
-                                solutionElement.classList.add("animated");
-                                solutionElement.classList.add("fadeInDown");
-                            }
-                        }
+                        game_reveal_found_letters(keyInput);
                     }
                 }
             }
@@ -181,7 +238,8 @@ const game_check_letter = function () {
 
         case "gameover":
             // Reset Game by reloadings
-            location.reload();
+            game_new_round();
+            //location.reload();
         break;
     }
 }
