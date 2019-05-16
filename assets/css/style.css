@@ -142,6 +142,16 @@ span[class^='letter-'] {
     display: none;
 }
 
+/* WORD HINT */
+#hint-details {
+    margin-top: 25px;
+    text-align: center;
+    font-weight: 500;
+    font-style: italic;
+    font-size: 20px;
+    color: green;g
+}
+
 /* --- FOOTER */
 .footer, .footerPush {
     height: 150px;

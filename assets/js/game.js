@@ -11,8 +11,18 @@ const inputStates = {
 var gameData = {
 
     // Word Library Data
-    wordLibrary:    ['SWEET', 'SUGAR', 'CHERRY', 'FUDGE', 'TAFFY', 'SYRUP', 'DONUT', 'CAKE', 'PIE', 'HONEY' ],
+    wordLibrary: [
+        { "WORD": "SUGAR", "HINT": "Soda is filled with me." },
+        { "WORD": "CHERRY", "HINT": "Goes on top of sundae." },
+        { "WORD": "TAFFY", "HINT": "Stretchy treat." },
+        { "WORD": "SYRUP", "HINT": "Goes on pancakes." },
+        { "WORD": "DONUT", "HINT": "Glazed or creme-filled." },
+        { "WORD": "CAKE", "HINT": "Served at a birthday." },
+        { "WORD": "PIE", "HINT": "Apple, Cherry, Pecan." },
+        { "WORD": "FUDGE", "HINT": "A type of chocolate." }
+    ],
     wordValue:      null,
+    hintValue:      null,
     lettersUsed:    [],
 
     // Game States

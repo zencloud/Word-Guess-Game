@@ -24,8 +24,11 @@ function getChrCount(string, chr) {
 */
 
 function isLetter(keyInput) {
-    keyInput = event.keyCode;
+
+    // Define default result state to avoid mix-matched data
     let result = false;
+    
+    // Verify character code is letter
     if (keyInput >= 65 && keyInput <= 90 || keyInput >= 97 && keyInput <= 122) {
         result = true;
     }

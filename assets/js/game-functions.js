@@ -5,24 +5,28 @@ const game_generate_word = function () {
 
     // Generator Word at start of round
     let wordRandom = getRandomInt(0, gameData.wordLibrary.length - 1);
+    
+    // Pull Word from Object
     gameData.wordValue = gameData.wordLibrary[wordRandom];
+    gameData.hintValue = gameData.wordValue.HINT;
+    gameData.wordValue = gameData.wordValue.WORD;
     var htmlData = '';
 
     // Loop through character positions to spell out word
-    for (var i = 0; i < gameData.wordValue.length; i++) {
-
-        // Create Main Word Div
+    for (let i = 0; i < gameData.wordValue.length; i++) {
         let wordPosition = gameData.wordValue[i];
         htmlData += `
-        <div class=\"content-solution-letter-cell\">
-        <span class="letter-${i}">${wordPosition}</span>
-        <div class=\"content-solution-letter-underline\"></div>
-        </div>
-    `;
+            <div class=\"content-solution-letter-cell\">
+            <span class="letter-${i}">${wordPosition}</span>
+            <div class=\"content-solution-letter-underline\"></div>
+            </div>
+        `;
     }
 
     // Set Div Content
     document.getElementById("content-solution-container").innerHTML = htmlData;
+
+    document.getElementById("hint-details").innerHTML = gameData.hintValue;
 };
 
 
@@ -42,7 +46,7 @@ const game_update_letters_used = function () {
         // Animation check: Only last value has intro
         // Prevents every container from re-animating every refresh
         let introCheck = '';
-        if (i == gameData.lettersUsed.length - 1) {
+        if (i === gameData.lettersUsed.length - 1) {
             introCheck = 'animated rubberBand';
         }
         htmlData += `
@@ -124,7 +128,7 @@ const game_check_letter = function () {
                         }
 
                         // Player Lost - Game Over
-                        if (gameData.wrongTotal == 6) {
+                        if (gameData.wrongTotal === 6) {
 
                             // Update Game Cookie Display
                             document.getElementById("cookie-display").src = "assets/imgs/game-states/lose.png";
@@ -148,7 +152,7 @@ const game_check_letter = function () {
                         gameData.correctTotal += chrCount;
                         
                         // Check if Won
-                        if (gameData.correctTotal == gameData.wordValue.length) {
+                        if (gameData.correctTotal === gameData.wordValue.length) {
 
                             // Update Cookie Display
                             document.getElementById("cookie-display").src = "assets/imgs/game-states/win.png";
@@ -162,7 +166,7 @@ const game_check_letter = function () {
 
                         // Reveal Letters Found
                         for (var i = 0; i < gameData.wordValue.length; i++) {
-                            if (gameData.wordValue[i] == keyInput) {
+                            if (gameData.wordValue[i] === keyInput) {
                                 let className = "letter-" + i;
                                 let solutionElement = document.getElementsByClassName(className)[0];
                                 solutionElement.style.display = 'block';
@@ -176,7 +180,7 @@ const game_check_letter = function () {
         break;
 
         case "gameover":
-            // Reset Game
+            // Reset Game by reloadings
             location.reload();
         break;
     }
