@@ -8,7 +8,7 @@ const game_set_round_won = function () {
     document.getElementById("cookie-display").src = "assets/imgs/game-states/win.png";
     let cookieElement = document.getElementById("cookie-display");
     cookieElement.classList.add("animated");
-    cookieElement.classList.add("fade");
+    cookieElement.classList.add("fadeIn");
     
     // Change Input
     gameData.inputState = inputStates.GAMEOVER;
